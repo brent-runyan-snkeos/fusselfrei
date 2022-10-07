@@ -1,8 +1,36 @@
 #include <iostream>
+#include <stdio.h>
+#include <cstring>
+#include <optional>
 
-using namespace std;
+
+namespace
+{
+  // https://rules.sonarsource.com/cpp/RSPEC-5798
+  void f()
+  {
+    char str[] = "almost every programmer should know memset!";
+    memset (str,'-',6);
+    puts (str);  
+  }
+
+  // https://rules.sonarsource.com/cpp/RSPEC-6427
+  void g(std::optional<int> &val, bool b) {
+      if (b) {
+        *val = 314; // Noncompliant, will throw if the optional was previously empty
+      } else {
+        val.value() = 42; // Noncompliant, will throw if the optional was previously empty
+      }
+  }
+
+}
 
 int main(int argc, char* argv[]) {
+  using namespace std;
+  
+  f();
+  g();
+
   int num = argc - 1;
 
   if (num == 0) {
