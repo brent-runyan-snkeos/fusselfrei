@@ -1,4 +1,6 @@
 add_executable(fusselig
+  forward_concept.cpp
+  forward_object.cpp
   main.cpp
 )
 
